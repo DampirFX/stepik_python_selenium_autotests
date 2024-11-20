@@ -41,3 +41,11 @@ class ProductPage(BasePage):
 
     def prices_should_be_equal(self, price, price_from_message):
         assert price == price_from_message, f"{price} not equal with {price_from_message}"
+
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.MESSAGE_ABOUT_ADD_TO_BASKET), \
+            "Success message is presented, but should not be"
+
+    def should_be_disappeared(self):
+        assert self.is_disappeared(*ProductPageLocators.MESSAGE_ABOUT_ADD_TO_BASKET), \
+            "Should be disappeared"

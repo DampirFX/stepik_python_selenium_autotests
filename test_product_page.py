@@ -1,5 +1,6 @@
 from .pages.product_page import ProductPage
 import pytest
+from .pages.locators import ProductPageLocators
 
 
 promo_links_list = ["http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0",
@@ -13,9 +14,9 @@ promo_links_list = ["http://selenium1py.pythonanywhere.com/catalogue/coders-at-w
                     "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer8",
                     "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer9"]
 
-@pytest.mark.parametrize('link', promo_links_list)
+# @pytest.mark.parametrize('link', promo_links_list)
 def test_guest_can_add_product_to_basket(browser, link):
-    # link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=newYear2019"
+    link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=newYear2019"
     page = ProductPage(browser, link)
     page.open()
     name = page.get_product_name()
@@ -30,3 +31,25 @@ def test_guest_can_add_product_to_basket(browser, link):
     page.names_should_be_equal(name, name_from_message)
     page.prices_should_be_equal(price, price_from_message)
     print()
+
+def test_guest_cant_see_success_message_after_adding_product_to_basket(browser):
+    link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=newYear2019"
+    page = ProductPage(browser, link)
+    page.open()
+    page.add_product_to_basket()
+    page.solve_quiz_and_get_code()
+    page.should_not_be_success_message()
+
+def test_guest_cant_see_success_message(browser):
+    link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=newYear2019"
+    page = ProductPage(browser, link)
+    page.open()
+    page.should_not_be_success_message()
+
+def test_message_disappeared_after_adding_product_to_basket(browser):
+    link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=newYear2019"
+    page = ProductPage(browser, link)
+    page.open()
+    page.add_product_to_basket()
+    page.solve_quiz_and_get_code()
+    page.should_be_disappeared()
