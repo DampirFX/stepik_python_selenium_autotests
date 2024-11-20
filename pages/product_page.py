@@ -17,12 +17,10 @@ class ProductPage(BasePage):
 
     def get_product_name_from_message(self):
         name = self.browser.find_element(*ProductPageLocators.MESSAGE_ABOUT_ADD_TO_BASKET).text
-        #  has been added to your basket.
         return name
 
     def get_product_price_from_message(self):
         price = self.browser.find_element(*ProductPageLocators.MESSAGE_ABOUT_BASKET_TOTAL).text
-        # Your basket total is now
         return price
 
     def should_be_present_button_add_to_basket(self):
