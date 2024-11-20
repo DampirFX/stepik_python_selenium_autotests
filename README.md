@@ -1,1 +1,2 @@
-# stepik_python_selenium_autotests
+# stepik python selenium autotests
+1. Финальное задание для курса https://stepik.org/course/575

@@ -1,8 +1,10 @@
-from selenium.common.exceptions import NoSuchElementException, NoAlertPresentException, TimeoutException
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from .locators import BasePageLocators
 import math
+
+from selenium.common.exceptions import NoSuchElementException, NoAlertPresentException, TimeoutException
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+
+from .locators import BasePageLocators
 
 
 class BasePage():
@@ -27,6 +29,15 @@ class BasePage():
         except (NoSuchElementException):
             return False
         return text
+
+    def click_button(self, how, what):
+        self.browser.find_element(how, what).click()
+
+    def input_text_to_field(self, how, what, text):
+        try:
+            self.browser.find_element(how, what).send_keys(text)
+        except (NoSuchElementException):
+            return False
 
     def solve_quiz_and_get_code(self):
         alert = self.browser.switch_to.alert
@@ -69,3 +80,7 @@ class BasePage():
     def go_to_basket_page(self):
         link = self.browser.find_element(*BasePageLocators.BASKET_LINK)
         link.click()
+
+    def should_be_authorized_user(self):
+        assert self.is_element_present(*BasePageLocators.USER_ICON), "User icon is not presented," \
+                                                                     " probably unauthorised user"
